@@ -1,24 +1,17 @@
 FROM php:5.6
 
 # Install dependencies
-RUN sh -c 'echo "deb http://www.deb-multimedia.org jessie main" >> /etc/apt/sources.list'
-RUN apt-get update
-RUN apt-get install --force-yes -y ffmpeg git
-RUN apt-get clean
-RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-# Create application folder
-RUN mkdir /app
+RUN apt-get update && apt-get install --force-yes -y ffmpeg git && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Download banana-split
 RUN git clone https://github.com/pathartl/banana-split /app
 
-# Copy startup script
-COPY start.sh /app/
+# Checkout last PHP commit
+WORKDIR /app
+RUN git checkout d1df3e9aeb2a2240d15dcd780abb23ccd596086e
 
 # Start application
-WORKDIR /app
-CMD ./start.sh
+CMD ["php", "-S", "0.0.0.0:8080"]
 
 # Declare application port
 EXPOSE 8080

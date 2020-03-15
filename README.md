@@ -1,6 +1,6 @@
 # banana-split
 
-Docker image for https://github.com/pathartl/banana-split
+Docker image for PHP version of https://github.com/pathartl/banana-split
 
 Auto-update on container start
 
